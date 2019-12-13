@@ -57,7 +57,7 @@ valueField.setInt(Integer.valueOf(1), 2);
 
 锻炼一下自己的搜索技能吧！
 
-A: 在数学上，这种操作叫做`笛卡尔积`，对应的英文是`Cartesian product`，用这些关键词去搜索，就可以很容易地找到Guava中有一个`Sets.cartesianProduct`方法可以直接拿来用。
+A: 在数学上，这种操作叫做`笛卡尔积`，对应的英文是`Cartesian product`，用这些关键词去搜索，就可以很容易地找到Guava中有一个`Sets/Lists.cartesianProduct`方法可以直接拿来用。
 
 下次，当想要自己实现一个东西时，先按捺一下自己激动的心，去搜索一下有没有成熟的、久经考验的第三方库可以使用！
 
