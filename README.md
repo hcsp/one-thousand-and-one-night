@@ -57,3 +57,31 @@ valueField.setInt(Integer.valueOf(1), 2);
 
 锻炼一下自己的搜索技能吧！
 
+A: 在数学上，这种操作叫做`笛卡尔积`，对应的英文是`Cartesian product`，用这些关键词去搜索，就可以很容易地找到Guava中有一个`Sets.cartesianProduct`方法可以直接拿来用。
+
+下次，当想要自己实现一个东西时，先按捺一下自己激动的心，去搜索一下有没有成熟的、久经考验的第三方库可以使用！
+
+## 2019.12.13 【Java基础】【方法调用】【值传递】【简单】
+
+小明想要用下列代码找出一个字符串中，大写字母、小写字母和数字分别有多少个，但是结果很明显不对。请帮小明找到问题并修复程序中的bug。
+
+```
+    public static void main(String[] args) {
+        int upperCase = 0, lowerCase = 0, digit = 0;
+        count("AbC1DefG230", upperCase, lowerCase, digit);
+        System.out.println("upperCase: " + upperCase + ", lowerCase: " + lowerCase + ", digit: " + digit);
+    }
+
+    // 统计字符串中的大写字符、小写字符、数字出现的个数
+    public static void count(String s, int upperCase, int lowerCase, int digit) {
+        for (char ch : s.toCharArray()) {
+            if (Character.isUpperCase(ch)) {
+                upperCase++;
+            } else if (Character.isLowerCase(ch)) {
+                lowerCase++;
+            } else if (Character.isDigit(ch)) {
+                digit++;
+            }
+        }
+    }
+```
