@@ -94,3 +94,42 @@ A：Java中，方法调用的参数传递永远是【值传递】，因此，方
 ## 2019.12.15 【Java基础】【数据类型】【数组】【中等】
 
 Q：Java中的数组是什么类型，是基本数据类型还是引用数据类型？为什么我从来没有见过数组的定义？
+
+A：Java中的数组是引用数据类型，是JVM原生支持的一种特殊数据类型，由虚拟机通过专用的指令完成创建（有兴趣可以去翻一下虚拟机指令，有一部分是专门处理数组的）。你可以简单把数据理解成（虽然这样的定义并不存在）：
+
+```
+class int[] {
+    public int length;
+    private [][][][][][][][][][] data; // 存储每个数据
+    public int [](int i) {
+        return 第i个数据
+    }
+}
+```
+
+## 2019.12.17 【Java基础】【枚举】【中等】
+
+Q：现在有如下代码：
+
+```
+class Message {
+    public String getMessageType() { ... }
+}
+
+class MyService {
+    public create(Object data) { ... }
+    public update(Object data) { ... }
+    public delete(Object data) { ... }
+}
+
+public void handleMessage(MyService service, Message message, Object data){
+    switch(message.getMessageType()) {
+        case "create": service.create(data); break;
+        case "update": service.update(data); break;
+        case "delete": service.delete(data); break;
+        default: throw new RuntimeException();
+    }
+}
+```
+
+你能否进行你能否使用枚举对代码进行一下优化，使得代码不需要冗长的switch语句？
