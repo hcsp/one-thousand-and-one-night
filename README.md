@@ -133,3 +133,119 @@ public void handleMessage(MyService service, Message message, Object data){
 ```
 
 你能否进行你能否使用枚举对代码进行一下优化，使得代码不需要冗长的switch语句？
+
+A: （首先必须指出，这个答案不能算是「标准答案」，只能算作一种参考，你可以自由地选择自己认为好的写法）
+
+```
+class Message {
+    public String getMessageType() { ... }
+}
+
+class MyService {
+    public create(Object data) { ... }
+    public update(Object data) { ... }
+    public delete(Object data) { ... }
+}
+
+public void handleMessage(MyService service, Message message, Object data){
+    switch(message.getMessageType()) {
+        case "create": service.create(data); break;
+        case "update": service.update(data); break;
+        case "delete": service.delete(data); break;
+        default: throw new RuntimeException();
+    }
+}
+```
+
+通常，在我们的心中，「枚举」这种东西似乎就是一个个的小球，只能用来进行比较或者switch操作。但是，实际上，枚举类也是类，可以拥有方法、实现多态。我们可以利用多态来省掉多余的switch操作。
+
+```
+    enum MessageType {
+        CREATE {
+            @Override
+            public void handleMessage(MyService service, Object data) {
+                service.create(data);
+            }
+        },
+        UPDATE {
+            @Override
+            public void handleMessage(MyService service, Object data) {
+                service.update(data);
+            }
+        },
+        DELETE {
+            @Override
+            public void handleMessage(MyService service, Object data) {
+                service.delete(data);
+            }
+        };
+
+        public abstract void handleMessage(MyService service, Object data);
+    }
+
+    public void handleMessage(MyService service, MessageType messageType, Object data){
+        messageType.handleMessage(service, data);
+    }
+```
+
+发现了么？你首先声明了一个带抽象方法的`MessageType`枚举类型，然后声明了多个枚举值，每个枚举值可以覆盖该抽象方法，这样，枚举不再仅仅是存储数据的对象，它还可以调用方法，而`switch`消失了——Java的多态机制会自动帮我们处理方法分派。
+
+如果你嫌这种覆盖的写法太啰嗦，Java 8引入的函数式写法可以让代码更精炼——代价是更难读懂。
+
+```
+    enum MessageType {
+        CREATE(MyService::create),
+        UPDATE(MyService::update),
+        DELETE(MyService::delete);
+
+        private BiConsumer<MyService, Object> function;
+
+        MessageType(BiConsumer<MyService, Object> function) {
+            this.function = function;
+        }
+
+        public void handleMessage(MyService service, Object data) {
+            function.accept(service, data);
+        }
+    }
+```
+
+请仔细思考一下为什么可以这么写？
+
+## 2019.12.18 【Java基础】【范型】【反序列化】【中等】
+
+给定如下代码
+
+```
+    class User {
+        private Integer id;
+        private String name;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+```
+
+请编写一个`List<User> parse(String jsonList) { }`方法，使得能将
+
+```
+[{"id":1,"name":"张三"},{"id":2,"name":"李四"}]
+```
+
+这样的JSON字符串转换成`List<User>`。
+
+这个题看上去简单，实际上暗藏杀机，试试看吧。
+
