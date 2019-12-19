@@ -249,3 +249,15 @@ public void handleMessage(MyService service, Message message, Object data){
 
 这个题看上去简单，实际上暗藏杀机，试试看吧。
 
+进阶版：
+
+请编写一个`Map<String, List<User>> parse(String jsonList) { }`方法，使得能将
+
+```
+{ 
+  "技术部": [{"id":1,"name":"张三"},{"id":2,"name":"李四"}],
+  "财务部": [{"id":3,"name":"王五"}]
+}  
+```
+
+这样的JSON字符串转换成`Map<String, List<User>>`。
