@@ -261,3 +261,26 @@ public void handleMessage(MyService service, Message message, Object data){
 ```
 
 这样的JSON字符串转换成`Map<String, List<User>>`。
+
+A: 这道题目的坑在于，很多同学会本能地写：
+
+```
+JSON.parse(jsonString, Map<String, List<User>>.class);
+```
+
+但是，实际上，Java的范型是假范型，运行时是没有范型的类型信息的，这种写法并不能达到目的。
+
+```
+JSON.parse(jsonString, new TypeReference<Map<String, List<User>>>() {});
+```
+
+你需要通过`TypeReference`这种迂回的方式曲线救国，注意，几乎每个JSON库都提供了自己的`TypeReference`，使用时要注意。
+
+## 2019.12.20 【Java基础】【设计模式】【中等】
+
+单例模式是一种很常用的设计模式，主要用于某些对象全局只能存在一个实例的情况。请编写一个单例模式的实现。
+
+挑战：你能用几种方式完成单例模式？它们之间的优缺点如何？
+
+提示，可以阅读《Effective Java》的相关章节。搜索`effective java 单例模式`即可。
+
