@@ -284,3 +284,18 @@ JSON.parse(jsonString, new TypeReference<Map<String, List<User>>>() {});
 
 提示，可以阅读《Effective Java》的相关章节。搜索`effective java 单例模式`即可。
 
+A: 有个同学写了一个很让我惊艳的博客：https://www.jianshu.com/p/afb6eb85c821
+
+## 2019.12.24 【综合】【算法】【分而治之】【困难】
+
+Q: 请完成 https://github.com/hcsp/simple-calculator 中的挑战。
+```
+    // 请实现一个简单的计算器，能够计算传入的字符串所代表的表达式的值。
+    // 表达式只包含数字、+、-、(、)
+    // 你可以假设它一定是一个合法的表达式，且不包含负数
+    // 例如，传入字符串"1+1"，返回2
+    // 传入字符串"(1+2)-(3-7)+(10-12)"，返回5
+    public static int calculate(String str) {
+        return 0;
+    }
+```
